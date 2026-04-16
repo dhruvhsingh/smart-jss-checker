@@ -1,0 +1,19 @@
+=========================================
+SMART JSS CHECKER — YOUR DEPLOYMENT VALUES
+=========================================
+(Keep this file for reference. Do NOT share it publicly.)
+
+GOOGLE DRIVE FOLDER ID:
+1w6ks4JN6WIEv4_LWNgs1JUqB9qQgt3iz
+
+GOOGLE SHEET ID:
+1yKemIuyFZfkT6NCEbLKqkjLRaVO6HsNWVydgk6imgGM
+
+APPS SCRIPT URL:
+https://script.google.com/macros/s/AKfycbwMGI2s9GlpfNDvv1vTaiNjWhHuVRcPN2ZYN4EN7mi7_VyItZihqFjejJ4szxinMGzgbQ/exec
+
+HUGGING FACE SPACE URL:
+https://dhruvhsingh-smart-jss-checker.hf.space
+
+VERCEL FRONTEND URL:
+(pending — fill in after Step 5)
