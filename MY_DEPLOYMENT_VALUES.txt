@@ -16,4 +16,4 @@ HUGGING FACE SPACE URL:
 https://dhruvhsingh-smart-jss-checker.hf.space
 
 VERCEL FRONTEND URL:
-(pending — fill in after Step 5)
+https://smart-jss-checker-fawn.vercel.app

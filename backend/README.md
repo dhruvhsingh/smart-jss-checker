@@ -15,7 +15,7 @@ FastAPI backend for the Smart JSS Readiness Checker field-rollout app.
 
 ## How it works
 
-This backend uses **CLIP (ViT-B/32)** from OpenAI, running **fully locally** inside this
+This backend uses **CLIP (ViT-L/14)** from OpenAI — a much larger and more accurate
 Hugging Face Space. There are **no external AI API calls**, **no rate limits**, and
 **no per-request costs**. Hugging Face Spaces free CPU tier provides 16 GB RAM and
 2 vCPUs, which is more than enough to run CLIP for this workload.

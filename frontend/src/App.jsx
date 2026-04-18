@@ -16,6 +16,138 @@ const CameraIcon = () => (
   <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="12" width="40" height="28" rx="4" stroke="#6b7280" strokeWidth="2.5"/><circle cx="24" cy="26" r="8" stroke="#6b7280" strokeWidth="2.5"/><path d="M16 12l2-4h12l2 4" stroke="#6b7280" strokeWidth="2.5" strokeLinejoin="round"/></svg>
 );
 
+/* ───── Pose Guide SVG Illustration ───── */
+const PoseGuide = () => (
+  <svg width="100%" viewBox="0 0 680 660" style={{maxWidth:'480px',margin:'0 auto',display:'block'}}>
+    {/* CORRECT header */}
+    <rect x="40" y="10" width="600" height="32" rx="8" fill="#16a34a" opacity="0.12"/>
+    <text x="340" y="31" textAnchor="middle" fontSize="13" fontWeight="500" fill="#16a34a" fontFamily="inherit">Correct photo — follow this pose</text>
+
+    {/* Head */}
+    <ellipse cx="340" cy="105" rx="28" ry="34" fill="#D4A574" stroke="#B8956A" strokeWidth="0.8"/>
+    <path d="M312 95 Q314 72 340 68 Q366 72 368 95" fill="#2C1810"/>
+    <ellipse cx="340" cy="78" rx="30" ry="16" fill="#2C1810"/>
+    <circle cx="330" cy="104" r="2" fill="#5C3D2E"/>
+    <circle cx="350" cy="104" r="2" fill="#5C3D2E"/>
+    <path d="M335 116 Q340 120 345 116" fill="none" stroke="#5C3D2E" strokeWidth="1"/>
+
+    {/* Inner shirt sleeves */}
+    <rect x="258" y="138" width="28" height="62" rx="6" fill="#F5E6D3" stroke="#E8D5C0" strokeWidth="0.5"/>
+    <rect x="394" y="138" width="28" height="62" rx="6" fill="#F5E6D3" stroke="#E8D5C0" strokeWidth="0.5"/>
+
+    {/* Blue Jio Vest */}
+    <path d="M292 138 L292 262 L388 262 L388 138 L368 132 L312 132 Z" fill="#2979FF" stroke="#1565C0" strokeWidth="1"/>
+    <line x1="340" y1="134" x2="340" y2="260" stroke="#1565C0" strokeWidth="1.5"/>
+    <circle cx="363" cy="175" r="16" fill="#1A237E" opacity="0.8"/>
+    <text x="363" y="179" textAnchor="middle" fontSize="10" fontWeight="700" fill="white">Jio</text>
+
+    {/* Arms holding paper - raised to chest level */}
+    <path d="M266 184 Q274 200 300 216" fill="none" stroke="#D4A574" strokeWidth="12" strokeLinecap="round"/>
+    <path d="M414 184 Q406 200 380 216" fill="none" stroke="#D4A574" strokeWidth="12" strokeLinecap="round"/>
+
+    {/* Promotional Paper - held in front of torso */}
+    <rect x="296" y="208" width="88" height="108" rx="3" fill="#1A3FA0" stroke="#0D2B7A" strokeWidth="0.8"/>
+    <rect x="302" y="214" width="76" height="10" rx="2" fill="#E53935" opacity="0.8"/>
+    <text x="340" y="222" textAnchor="middle" fontSize="5.5" fill="white" fontWeight="700">EXCLUSIVE OFFER</text>
+    <text x="340" y="240" textAnchor="middle" fontSize="9" fill="white" fontWeight="700">Join Jio</text>
+    <rect x="304" y="248" width="72" height="14" rx="2" fill="#FF8F00" opacity="0.7"/>
+    <text x="340" y="258" textAnchor="middle" fontSize="5.5" fill="white" fontWeight="600">Watch Cricket FREE</text>
+    <rect x="304" y="268" width="72" height="14" rx="2" fill="#C62828" opacity="0.6"/>
+    <text x="340" y="278" textAnchor="middle" fontSize="5.5" fill="white" fontWeight="600">Unlimited 5G</text>
+    <circle cx="374" cy="218" r="6" fill="#E53935"/>
+    <text x="374" y="221" textAnchor="middle" fontSize="4.5" fill="white" fontWeight="700">Jio</text>
+    <rect x="296" y="208" width="88" height="108" rx="3" fill="white" opacity="0.05"/>
+
+    {/* Legs - visible below paper */}
+    <rect x="312" y="310" width="22" height="60" rx="4" fill="#1A1A2E"/>
+    <rect x="346" y="310" width="22" height="60" rx="4" fill="#1A1A2E"/>
+    <rect x="308" y="364" width="30" height="10" rx="4" fill="#333"/>
+    <rect x="342" y="364" width="30" height="10" rx="4" fill="#333"/>
+
+    {/* Annotation: single person */}
+    <line x1="208" y1="82" x2="304" y2="95" stroke="#16a34a" strokeWidth="1" markerEnd="url(#ag)"/>
+    <rect x="76" y="68" width="132" height="28" rx="8" fill="#16a34a" opacity="0.1" stroke="#16a34a" strokeWidth="0.5"/>
+    <text x="142" y="86" textAnchor="middle" fontSize="11" fontWeight="500" fill="#16a34a">1 person, front-facing</text>
+
+    {/* Annotation: blue vest */}
+    <line x1="464" y1="178" x2="392" y2="178" stroke="#2979FF" strokeWidth="1" markerEnd="url(#ag)"/>
+    <rect x="468" y="162" width="130" height="32" rx="8" fill="#2979FF" opacity="0.1" stroke="#2979FF" strokeWidth="0.5"/>
+    <text x="533" y="177" textAnchor="middle" fontSize="11" fontWeight="500" fill="#1565C0">Blue Jio vest</text>
+    <text x="533" y="190" textAnchor="middle" fontSize="10" fill="#1565C0" opacity="0.7">worn on body</text>
+
+    {/* Annotation: inner sleeves */}
+    <line x1="464" y1="225" x2="424" y2="210" stroke="#8D6E63" strokeWidth="1" markerEnd="url(#ag)"/>
+    <rect x="468" y="212" width="148" height="26" rx="8" fill="#8D6E63" opacity="0.1" stroke="#8D6E63" strokeWidth="0.5"/>
+    <text x="542" y="229" textAnchor="middle" fontSize="11" fontWeight="500" fill="#5D4037">Inner sleeves visible</text>
+
+    {/* Annotation: paper held */}
+    <line x1="208" y1="260" x2="294" y2="260" stroke="#E65100" strokeWidth="1" markerEnd="url(#ag)"/>
+    <rect x="62" y="246" width="146" height="28" rx="8" fill="#E65100" opacity="0.1" stroke="#E65100" strokeWidth="0.5"/>
+    <text x="135" y="264" textAnchor="middle" fontSize="11" fontWeight="500" fill="#E65100">Jio paper held visibly</text>
+
+    {/* Arrow marker */}
+    <defs><marker id="ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></marker></defs>
+
+    {/* Divider */}
+    <line x1="60" y1="396" x2="620" y2="396" stroke="#e5e7eb" strokeWidth="0.5"/>
+
+    {/* WRONG header */}
+    <rect x="40" y="410" width="600" height="32" rx="8" fill="#dc2626" opacity="0.12"/>
+    <text x="340" y="431" textAnchor="middle" fontSize="13" fontWeight="500" fill="#dc2626">Common mistakes — avoid these</text>
+
+    {/* Mistake 1: Wrong vest color */}
+    <g transform="translate(55, 458)">
+      <rect width="125" height="90" rx="8" fill="#fafafa" stroke="#e5e7eb" strokeWidth="0.5"/>
+      <circle cx="62" cy="26" r="9" fill="#D4A574"/>
+      <rect x="42" y="38" width="40" height="30" rx="3" fill="#C62828"/>
+      <text x="62" y="53" textAnchor="middle" fontSize="6" fill="white" fontWeight="600">NOT Jio</text>
+      <line x1="18" y1="8" x2="107" y2="82" stroke="#dc2626" strokeWidth="2" opacity="0.6"/>
+      <line x1="107" y1="8" x2="18" y2="82" stroke="#dc2626" strokeWidth="2" opacity="0.6"/>
+      <text x="62" y="86" textAnchor="middle" fontSize="9" fill="#dc2626" fontWeight="500">Wrong vest color</text>
+    </g>
+
+    {/* Mistake 2: Phone not paper */}
+    <g transform="translate(200, 458)">
+      <rect width="125" height="90" rx="8" fill="#fafafa" stroke="#e5e7eb" strokeWidth="0.5"/>
+      <circle cx="62" cy="26" r="9" fill="#D4A574"/>
+      <rect x="42" y="38" width="40" height="30" rx="3" fill="#2979FF"/>
+      <rect x="54" y="46" width="16" height="22" rx="2" fill="#333"/>
+      <rect x="56" y="48" width="12" height="16" rx="1" fill="#4FC3F7"/>
+      <line x1="18" y1="8" x2="107" y2="82" stroke="#dc2626" strokeWidth="2" opacity="0.6"/>
+      <line x1="107" y1="8" x2="18" y2="82" stroke="#dc2626" strokeWidth="2" opacity="0.6"/>
+      <text x="62" y="86" textAnchor="middle" fontSize="9" fill="#dc2626" fontWeight="500">Phone, not paper</text>
+    </g>
+
+    {/* Mistake 3: Multiple people */}
+    <g transform="translate(345, 458)">
+      <rect width="125" height="90" rx="8" fill="#fafafa" stroke="#e5e7eb" strokeWidth="0.5"/>
+      <circle cx="40" cy="26" r="8" fill="#D4A574"/>
+      <circle cx="84" cy="26" r="8" fill="#D4A574"/>
+      <rect x="26" y="38" width="28" height="26" rx="3" fill="#2979FF"/>
+      <rect x="70" y="38" width="28" height="26" rx="3" fill="#555"/>
+      <line x1="18" y1="8" x2="107" y2="82" stroke="#dc2626" strokeWidth="2" opacity="0.6"/>
+      <line x1="107" y1="8" x2="18" y2="82" stroke="#dc2626" strokeWidth="2" opacity="0.6"/>
+      <text x="62" y="86" textAnchor="middle" fontSize="9" fill="#dc2626" fontWeight="500">Multiple people</text>
+    </g>
+
+    {/* Mistake 4: No paper */}
+    <g transform="translate(490, 458)">
+      <rect width="125" height="90" rx="8" fill="#fafafa" stroke="#e5e7eb" strokeWidth="0.5"/>
+      <circle cx="62" cy="26" r="9" fill="#D4A574"/>
+      <rect x="42" y="38" width="40" height="30" rx="3" fill="#2979FF"/>
+      <text x="62" y="53" textAnchor="middle" fontSize="7" fill="white" fontWeight="600">Jio</text>
+      <line x1="18" y1="8" x2="107" y2="82" stroke="#dc2626" strokeWidth="2" opacity="0.6"/>
+      <line x1="107" y1="8" x2="18" y2="82" stroke="#dc2626" strokeWidth="2" opacity="0.6"/>
+      <text x="62" y="86" textAnchor="middle" fontSize="9" fill="#dc2626" fontWeight="500">No paper held</text>
+    </g>
+
+    {/* Bottom tip */}
+    <rect x="60" y="572" width="560" height="44" rx="10" fill="#fafafa" stroke="#e5e7eb" strokeWidth="0.5"/>
+    <text x="340" y="590" textAnchor="middle" fontSize="12" fontWeight="500" fill="#374151">Stand front-facing in a well-lit area, vest on, paper in hands</text>
+    <text x="340" y="606" textAnchor="middle" fontSize="10" fill="#6b7280">No phones • No group photos • No mirror selfies</text>
+  </svg>
+);
+
 function App() {
   const [prmId, setPrmId] = useState('');
   const [photo, setPhoto] = useState(null);
@@ -111,28 +243,10 @@ function App() {
 
       <main style={styles.main}>
         <section style={styles.card}>
-          <h2 style={styles.cardTitle}>📸 Photo Guidelines</h2>
-          <div style={styles.guideGrid}>
-            <div style={styles.guideDo}>
-              <div style={styles.guideBadge}>✅ DO THIS</div>
-              <ul style={styles.guideList}>
-                <li>Stand facing the camera, upper body clearly visible</li>
-                <li>Wear the blue Jio jacket (on your body)</li>
-                <li>Hold the laminated Jio offer paper in front</li>
-                <li>Take photo in a well-lit area</li>
-                <li>Only one person in the frame</li>
-              </ul>
-            </div>
-            <div style={styles.guideAvoid}>
-              <div style={{...styles.guideBadge, background: '#fef2f2', color: '#dc2626'}}>❌ AVOID</div>
-              <ul style={styles.guideList}>
-                <li>Jacket on table/hanger/floor</li>
-                <li>Holding the wrong paper or white pages</li>
-                <li>Group or crowd photos</li>
-                <li>Mirror selfies</li>
-                <li>Dark, blurry, or overexposed photos</li>
-              </ul>
-            </div>
+          <h2 style={styles.cardTitle}>📸 How to take the correct photo</h2>
+          <PoseGuide />
+          <div style={{marginTop:'14px', padding:'10px 12px', background:'#f0fdf4', borderRadius:'10px', fontSize:'12px', color:'#16a34a', fontWeight:500, textAlign:'center', lineHeight:1.5}}>
+            ✅ 1 person &nbsp;•&nbsp; Blue Jio vest on body &nbsp;•&nbsp; Jio paper in hands &nbsp;•&nbsp; Well-lit &nbsp;•&nbsp; No phones
           </div>
         </section>
 

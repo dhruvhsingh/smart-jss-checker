@@ -1,8 +1,6 @@
 FROM python:3.11-slim
 
-# HF Spaces requires a non-root user with UID 1000
 RUN useradd -m -u 1000 user
-
 USER user
 
 ENV PATH="/home/user/.local/bin:$PATH" \
@@ -12,25 +10,21 @@ ENV PATH="/home/user/.local/bin:$PATH" \
 
 WORKDIR /home/user/app
 
-# Install CPU-only PyTorch FIRST (much smaller than default: ~200MB vs ~800MB)
+# Install CPU-only PyTorch
 RUN pip install --no-cache-dir --user \
     torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
 
-# Install remaining dependencies
 COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir --user -r requirements.txt
 
-# Copy application code
 COPY --chown=user . .
 
-# Pre-download the CLIP model INTO the Docker image so first request is fast.
-# This bakes the model weights (~150 MB) into the image; no runtime download.
+# Pre-download the LARGER CLIP model (ViT-L/14 — much more accurate than ViT-B/32)
+# ~890 MB model, fits easily in 16GB RAM. Significant accuracy improvement.
 RUN python -c "from transformers import CLIPModel, CLIPProcessor; \
-    CLIPModel.from_pretrained('openai/clip-vit-base-patch32'); \
-    CLIPProcessor.from_pretrained('openai/clip-vit-base-patch32'); \
-    print('CLIP model cached.')"
+    CLIPModel.from_pretrained('openai/clip-vit-large-patch14'); \
+    CLIPProcessor.from_pretrained('openai/clip-vit-large-patch14'); \
+    print('CLIP ViT-L/14 model cached.')"
 
-# HF Spaces default port
 EXPOSE 7860
-
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
