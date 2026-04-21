@@ -84,9 +84,15 @@ function buildGuidance(result) {
   return tips;
 }
 
-/* ───── PRM ID validation ───── */
-function isValidPRM(value) {
-  return /^\d{9}$/.test(value);
+/* ───── PRN ID validation ───── */
+function normalizePRN(value) {
+  // If user types 663..., auto-prepend 0
+  if (value.length === 9 && value.startsWith('663')) return '0' + value;
+  return value;
+}
+function isValidPRN(value) {
+  const n = normalizePRN(value);
+  return /^0663\d{6}$/.test(n);
 }
 
 function App() {
@@ -118,10 +124,17 @@ function App() {
   }, []);
 
   const handlePrmChange = (e) => {
-    const val = e.target.value.replace(/\D/g, '').slice(0, 9);
+    const val = e.target.value.replace(/\D/g, '').slice(0, 10);
     setPrmId(val);
-    if (val.length > 0 && val.length < 9) setPrmError('PRM ID must be exactly 9 digits');
-    else setPrmError('');
+    if (val.length > 0) {
+      const norm = normalizePRN(val);
+      if (val.length < 9) setPrmError('PRN ID must be 10 digits (starting with 0663)');
+      else if (val.length === 9 && val.startsWith('663')) setPrmError(''); // will auto-fix
+      else if (val.length === 10 && !norm.startsWith('0663')) setPrmError('PRN ID must start with 0663');
+      else if (val.length >= 9 && isValidPRN(val)) setPrmError('');
+      else if (val.length === 10 && !isValidPRN(val)) setPrmError('Invalid PRN ID format');
+      else setPrmError('');
+    } else setPrmError('');
   };
 
   const handlePhotoChange = (e) => {
@@ -138,7 +151,7 @@ function App() {
   };
 
   const handleSubmit = async () => {
-    if (!isValidPRM(prmId)) { setPrmError('PRM ID must be exactly 9 digits'); return; }
+    if (!isValidPRN(prmId)) { setPrmError('PRN ID must be 10 digits starting with 0663'); return; }
     if (!photo) { setErrorMsg('Please upload a photo.'); setStatus('error'); return; }
 
     // Re-request location if not yet acquired
@@ -155,7 +168,7 @@ function App() {
     setResult(null);
 
     const formData = new FormData();
-    formData.append('prm_id', prmId);
+    formData.append('prm_id', normalizePRN(prmId));
     formData.append('photo', photo);
     if (location) {
       formData.append('latitude', location.lat.toFixed(6));
@@ -253,23 +266,23 @@ function App() {
             </div>
 
             {/* PRM ID - 9 digits only */}
-            <label style={styles.label}>PRM ID <span style={{color:'#dc2626'}}>*</span></label>
+            <label style={styles.label}>PRN ID <span style={{color:'#dc2626'}}>*</span></label>
             <input
               type="text"
               inputMode="numeric"
-              pattern="[0-9]{9}"
-              placeholder="Enter 9-digit PRM ID"
+              pattern="[0-9]{10}"
+              placeholder="Enter 10-digit PRN ID (e.g. 0663...)"
               value={prmId}
               onChange={handlePrmChange}
               style={{
                 ...styles.input,
                 borderColor: prmError ? '#dc2626' : '#d1d5db',
               }}
-              maxLength={9}
+              maxLength={10}
               disabled={status === 'loading'}
             />
             {prmError && <p style={{margin:'4px 0 0', fontSize:'12px', color:'#dc2626'}}>{prmError}</p>}
-            {prmId.length === 9 && !prmError && <p style={{margin:'4px 0 0', fontSize:'12px', color:'#16a34a'}}>✓ Valid PRM ID</p>}
+            {isValidPRN(prmId) && !prmError && <p style={{margin:'4px 0 0', fontSize:'12px', color:'#16a34a'}}>✓ Valid PRN ID{prmId.length === 9 ? ' (will submit as 0' + prmId + ')' : ''}</p>}
 
             {/* Photo Upload */}
             <label style={styles.label}>Photo <span style={{color:'#dc2626'}}>*</span></label>
@@ -302,11 +315,11 @@ function App() {
 
             <button
               onClick={handleSubmit}
-              disabled={status === 'loading' || !isValidPRM(prmId) || !photo}
+              disabled={status === 'loading' || !isValidPRN(prmId) || !photo}
               style={{
                 ...styles.submitBtn,
-                opacity: (status === 'loading' || !isValidPRM(prmId) || !photo) ? 0.6 : 1,
-                cursor: (status === 'loading' || !isValidPRM(prmId) || !photo) ? 'not-allowed' : 'pointer',
+                opacity: (status === 'loading' || !isValidPRN(prmId) || !photo) ? 0.6 : 1,
+                cursor: (status === 'loading' || !isValidPRN(prmId) || !photo) ? 'not-allowed' : 'pointer',
               }}
             >
               {status === 'loading' ? (
@@ -326,7 +339,7 @@ function App() {
             <div style={{textAlign:'center', padding:'20px 0'}}>
               <div style={{fontSize:'56px', marginBottom:'12px'}}>✅</div>
               <h2 style={{fontSize:'20px', fontWeight:700, color:'#16a34a', margin:'0 0 8px'}}>Photo Recorded Successfully</h2>
-              <p style={{fontSize:'14px', color:'#6b7280', margin:'0 0 4px'}}>PRM ID: {result.prm_id}</p>
+              <p style={{fontSize:'14px', color:'#6b7280', margin:'0 0 4px'}}>PRN ID: {result.prm_id}</p>
               <p style={{fontSize:'13px', color:'#9ca3af', margin:0}}>{result.timestamp}</p>
             </div>
             <button onClick={handleReset} style={styles.newBtn}>Submit Another Photo</button>
@@ -352,7 +365,7 @@ function App() {
             </div>
 
             <p style={{fontSize:'11px', color:'#9ca3af', textAlign:'center', margin:'0 0 12px'}}>
-              PRM ID: {result.prm_id} • {result.timestamp}
+              PRN ID: {result.prm_id} • {result.timestamp}
             </p>
 
             <button onClick={handleRetake} style={{...styles.submitBtn, background:'linear-gradient(135deg, #b45309 0%, #d97706 100%)'}}>

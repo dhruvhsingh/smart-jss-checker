@@ -319,7 +319,8 @@ def analyze(image: Image.Image) -> dict:
 # APPS SCRIPT UPLOAD
 # ============================================
 async def send_to_apps_script(prm_id, filename, image_b64, mime_type, result,
-                              img_w, img_h, img_mode, ts):
+                              img_w, img_h, img_mode, ts,
+                              latitude="", longitude="", location_accuracy=""):
     if not APPS_SCRIPT_URL:
         return {"drive_file_url": "", "sheet_status": "Apps Script not configured"}
     payload = {
@@ -418,7 +419,8 @@ async def analyze_endpoint(
 
     image_b64 = base64.b64encode(image_bytes).decode("utf-8")
     upload = await send_to_apps_script(
-        prm_id, safe_name, image_b64, mime, result, img_w, img_h, img_mode, ts)
+        prm_id, safe_name, image_b64, mime, result, img_w, img_h, img_mode, ts,
+        latitude, longitude, location_accuracy)
 
     dt_ms = int((datetime.now(IST) - t0).total_seconds() * 1000)
     log.info(f"  completed in {dt_ms} ms")
