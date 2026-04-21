@@ -333,7 +333,9 @@ async def send_to_apps_script(prm_id, filename, image_b64, mime_type, result,
         "review_required": str(result["review_required"]),
         "review_reason": result["review_reason"],
         "image_width": str(img_w), "image_height": str(img_h),
-        "image_mode": img_mode, "image_data": image_b64, "image_mime": mime_type,
+        "image_mode": img_mode,
+        "latitude": latitude, "longitude": longitude, "location_accuracy": location_accuracy,
+        "image_data": image_b64, "image_mime": mime_type,
     }
     try:
         async with httpx.AsyncClient(timeout=90.0) as client:
@@ -359,7 +361,13 @@ def health():
             "apps_script_configured": bool(APPS_SCRIPT_URL), "device": DEVICE}
 
 @app.post("/api/analyze")
-async def analyze_endpoint(prm_id: str = Form(...), photo: UploadFile = File(...)):
+async def analyze_endpoint(
+    prm_id: str = Form(...),
+    photo: UploadFile = File(...),
+    latitude: str = Form(""),
+    longitude: str = Form(""),
+    location_accuracy: str = Form(""),
+):
     t0 = datetime.now(IST)
     ts = t0.strftime("%Y-%m-%d %H:%M:%S IST")
 

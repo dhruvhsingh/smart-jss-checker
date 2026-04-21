@@ -1,24 +1,21 @@
 /**
- * Smart JSS Readiness Checker — Google Apps Script
+ * Smart JSS Readiness Checker — Google Apps Script v2
  * Receives POST from backend, saves image to Drive, logs row to Sheets.
+ * Now includes GPS location columns.
  *
- * SETUP: Replace FOLDER_ID and SHEET_ID below with your actual IDs.
- * Deploy as: Web App → Execute as Me → Anyone can access.
+ * IMPORTANT: After updating this file, you must create a NEW deployment
+ * in Apps Script (Deploy → New deployment), not just save.
+ * Then update APPS_SCRIPT_URL in your HF Space secrets with the new URL.
  */
 
-// ============================================
-// PASTE YOUR IDs HERE
-// ============================================
 var FOLDER_ID = "1w6ks4JN6WIEv4_LWNgs1JUqB9qQgt3iz";
 var SHEET_ID  = "1yKemIuyFZfkT6NCEbLKqkjLRaVO6HsNWVydgk6imgGM";
 var SHEET_TAB = "Sheet1";
-// ============================================
 
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
 
-    // --- Upload image to Google Drive ---
     var driveUrl = "";
     try {
       var imageBlob = Utilities.newBlob(
@@ -35,7 +32,6 @@ function doPost(e) {
       driveUrl = "UPLOAD_FAILED: " + driveErr.toString().substring(0, 100);
     }
 
-    // --- Append row to Google Sheet ---
     var sheetStatus = "success";
     try {
       var ss = SpreadsheetApp.openById(SHEET_ID);
@@ -45,13 +41,15 @@ function doPost(e) {
       var lastRow = sheet.getLastRow();
       if (lastRow === 0) {
         sheet.appendRow([
-          "Timestamp", "PRM ID", "Filename", "Is Female",
-          "Has Jio Jacket", "Has Laminated Jio Paper",
+          "Timestamp", "PRM ID", "Filename",
+          "Is Female", "Has Jio Jacket", "Has Laminated Jio Paper",
           "Female Confidence", "Jacket Confidence", "Paper Confidence",
           "Review Required", "Review Reason",
-          "Image Width", "Image Height", "Image Mode", "Drive File URL"
+          "Image Width", "Image Height", "Image Mode",
+          "Latitude", "Longitude", "Location Accuracy",
+          "Drive File URL"
         ]);
-        sheet.getRange(1, 1, 1, 15).setFontWeight("bold");
+        sheet.getRange(1, 1, 1, 18).setFontWeight("bold");
       }
 
       sheet.appendRow([
@@ -69,6 +67,9 @@ function doPost(e) {
         data.image_width || "",
         data.image_height || "",
         data.image_mode || "",
+        data.latitude || "",
+        data.longitude || "",
+        data.location_accuracy || "",
         driveUrl
       ]);
     } catch (sheetErr) {
